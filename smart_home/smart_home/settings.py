@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'smart_home.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'netology_smart_home',
         'USER': 'postgres',
         'PASSWORD': 'Ivanov-1808',
