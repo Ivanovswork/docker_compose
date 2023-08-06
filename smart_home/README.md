@@ -12,17 +12,6 @@ docker build . --tag=doc2
 ```
 
 ```base
-docker run -d doc2
+docker run -d -p 1234:8880 doc2
 ```
 
-```base
-cd smart_home/
-```
-
-```base
-python manage.py migrate
-```
-
-```base
-python manage.py runserver
-```
