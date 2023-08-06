@@ -1,0 +1,37 @@
+version: '3.9'
+
+volumes:
+  pqdata:
+
+services:
+  postgredb:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "my_db"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - .:/logs:/var/log
+      - pqdata:/var/lib/postgresql/data
+      - .:/docker-entrypoint-initdb.d
+
+
+  my_python_app:
+
+    build: .
+    command: gunicorn smart_home.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgredb
+
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - my_python_app
